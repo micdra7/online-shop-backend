@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using online_shop_backend.Models.Entities;
+using online_shop_backend.Models.Identity;
 
-namespace online_shop_backend.Migrations.ApplicationDb
+namespace online_shop_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class ApplicationIdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,206 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.Category", b =>
                 {
@@ -69,6 +269,12 @@ namespace online_shop_backend.Migrations.ApplicationDb
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<long>("ApplicationUserID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("DateIssued")
                         .HasColumnType("timestamp without time zone");
 
@@ -78,17 +284,11 @@ namespace online_shop_backend.Migrations.ApplicationDb
                     b.Property<decimal>("TotalValue")
                         .HasColumnType("numeric");
 
-                    b.Property<long>("UserID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("OrderID");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OrderID");
 
                     b.ToTable("invoices");
                 });
@@ -128,6 +328,9 @@ namespace online_shop_backend.Migrations.ApplicationDb
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("ApplicationUserID")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("DateAndTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -141,14 +344,11 @@ namespace online_shop_backend.Migrations.ApplicationDb
                     b.Property<decimal>("ShippingMethodPrice")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("UserID")
-                        .HasColumnType("text");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("ShippingMethodID");
+                    b.HasIndex("ApplicationUserID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("ShippingMethodID");
 
                     b.ToTable("orders");
                 });
@@ -188,14 +388,14 @@ namespace online_shop_backend.Migrations.ApplicationDb
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("PaymentTypeID")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("UserID")
+                    b.Property<long>("ApplicationUserID")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("text");
+
+                    b.Property<int>("PaymentTypeID")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -204,9 +404,9 @@ namespace online_shop_backend.Migrations.ApplicationDb
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PaymentTypeID");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PaymentTypeID");
 
                     b.ToTable("payment_methods");
                 });
@@ -331,6 +531,12 @@ namespace online_shop_backend.Migrations.ApplicationDb
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<long>("ApplicationUserID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("character varying(1024)")
@@ -342,17 +548,11 @@ namespace online_shop_backend.Migrations.ApplicationDb
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
 
-                    b.Property<long>("UserID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("ProductID");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("reviews");
                 });
@@ -418,6 +618,9 @@ namespace online_shop_backend.Migrations.ApplicationDb
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
+                    b.Property<string>("ApplicationUserID")
+                        .HasColumnType("text");
+
                     b.Property<string>("City")
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
@@ -440,70 +643,73 @@ namespace online_shop_backend.Migrations.ApplicationDb
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("UserID")
-                        .HasColumnType("text");
-
                     b.Property<string>("ZipCode")
                         .HasColumnType("character varying(32)")
                         .HasMaxLength(32);
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("ApplicationUserID");
 
                     b.ToTable("user_details");
                 });
 
             modelBuilder.Entity("online_shop_backend.Models.Identity.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationUser");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.Discount", b =>
@@ -517,15 +723,15 @@ namespace online_shop_backend.Migrations.ApplicationDb
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.Invoice", b =>
                 {
+                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany("Invoices")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("online_shop_backend.Models.Entities.Order", "Order")
                         .WithMany("Invoices")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "User")
-                        .WithMany("Invoices")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.InvoiceDetail", b =>
@@ -545,15 +751,15 @@ namespace online_shop_backend.Migrations.ApplicationDb
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.Order", b =>
                 {
+                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserID");
+
                     b.HasOne("online_shop_backend.Models.Entities.ShippingMethod", "ShippingMethod")
                         .WithMany()
                         .HasForeignKey("ShippingMethodID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.OrderDetail", b =>
@@ -573,15 +779,15 @@ namespace online_shop_backend.Migrations.ApplicationDb
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.PaymentMethod", b =>
                 {
+                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany("PaymentMethods")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("online_shop_backend.Models.Entities.PaymentType", "PaymentType")
                         .WithMany("PaymentMethods")
                         .HasForeignKey("PaymentTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "User")
-                        .WithMany("PaymentMethods")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.ProducerDetail", b =>
@@ -616,15 +822,15 @@ namespace online_shop_backend.Migrations.ApplicationDb
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.Review", b =>
                 {
+                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("online_shop_backend.Models.Entities.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.Subcategory", b =>
@@ -638,9 +844,9 @@ namespace online_shop_backend.Migrations.ApplicationDb
 
             modelBuilder.Entity("online_shop_backend.Models.Entities.UserDetail", b =>
                 {
-                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "User")
+                    b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "ApplicationUser")
                         .WithMany("Details")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("ApplicationUserID");
                 });
 #pragma warning restore 612, 618
         }

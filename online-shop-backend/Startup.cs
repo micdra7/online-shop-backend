@@ -28,13 +28,10 @@ namespace online_shop_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkNpgsql()
-                .AddDbContext<ApplicationIdentityDbContext>(options =>
+                .AddDbContext<ApplicationDbContext>(options =>
                     options.UseNpgsql(Configuration["ConnectionStrings:OnlineShopDatabase"]))
                 .BuildServiceProvider();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration["ConnectionStrings:OnlineShopDatabase"]));
-            
             services.AddControllers();
         }
 

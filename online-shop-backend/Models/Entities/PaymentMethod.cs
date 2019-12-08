@@ -9,13 +9,13 @@ namespace online_shop_backend.Models.Entities
         
         public int PaymentTypeID { get; set; }
         
-        public long UserID { get; set; }
+        public long ApplicationUserID { get; set; }
         
         [Required]
         [StringLength(512)]
         public string Value { get; set; }
         
         public PaymentType PaymentType { get; set; }
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

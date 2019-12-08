@@ -10,8 +10,8 @@ using online_shop_backend.Models.Identity;
 namespace online_shop_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191129200901_Initial")]
-    partial class Initial
+    [Migration("20191208201508_EntityUpdatev5")]
+    partial class EntityUpdatev5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

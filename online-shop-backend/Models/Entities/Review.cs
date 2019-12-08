@@ -7,7 +7,7 @@ namespace online_shop_backend.Models.Entities
     {
         public long ID { get; set; }
         
-        public long UserID { get; set; }
+        public long ApplicationUserID { get; set; }
         
         public long ProductID { get; set; }
         
@@ -19,7 +19,7 @@ namespace online_shop_backend.Models.Entities
         [StringLength(1024)]
         public string Content { get; set; }
         
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public Product Product { get; set; }
     }
 }

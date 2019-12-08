@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using online_shop_backend.Models.Identity;
+using online_shop_backend.Models.Entities;
 
-namespace online_shop_backend.Models.Entities
+namespace online_shop_backend.Models.Identity
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -28,6 +29,8 @@ namespace online_shop_backend.Models.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<UserDetail>().ToTable("user_details");
             modelBuilder.Entity<Product>().ToTable("products");
             modelBuilder.Entity<Producer>().ToTable("producers");

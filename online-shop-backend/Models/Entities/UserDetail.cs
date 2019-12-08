@@ -7,7 +7,7 @@ namespace online_shop_backend.Models.Entities
     {
         public long ID { get; set; }
         
-        public string UserID { get; set; }
+        public string ApplicationUserID { get; set; }
         
         [Required]
         [StringLength(128)]
@@ -38,6 +38,6 @@ namespace online_shop_backend.Models.Entities
         [StringLength(200)]
         public string StateRegion { get; set; }
         
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

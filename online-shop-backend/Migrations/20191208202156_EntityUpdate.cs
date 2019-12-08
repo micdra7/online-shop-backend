@@ -2,36 +2,17 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace online_shop_backend.Migrations.ApplicationDb
+namespace online_shop_backend.Migrations
 {
-    public partial class EntityClasses : Migration
+    public partial class EntityUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ApplicationUser",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
-                });
+            migrationBuilder.AddColumn<string>(
+                name: "Discriminator",
+                table: "AspNetUsers",
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.CreateTable(
                 name: "categories",
@@ -92,7 +73,7 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserID = table.Column<string>(nullable: true),
+                    ApplicationUserID = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 128, nullable: false),
                     Surname = table.Column<string>(maxLength: 200, nullable: false),
                     Address1 = table.Column<string>(maxLength: 200, nullable: true),
@@ -107,9 +88,9 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 {
                     table.PrimaryKey("PK_user_details", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_user_details_ApplicationUser_UserID",
-                        column: x => x.UserID,
-                        principalTable: "ApplicationUser",
+                        name: "FK_user_details_AspNetUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -141,25 +122,25 @@ namespace online_shop_backend.Migrations.ApplicationDb
                     ID = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PaymentTypeID = table.Column<int>(nullable: false),
-                    UserID = table.Column<long>(nullable: false),
+                    ApplicationUserID = table.Column<long>(nullable: false),
                     Value = table.Column<string>(maxLength: 512, nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_payment_methods", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_payment_methods_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_payment_methods_payment_types_PaymentTypeID",
                         column: x => x.PaymentTypeID,
                         principalTable: "payment_types",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_payment_methods_ApplicationUser_UserId",
-                        column: x => x.UserId,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,7 +174,7 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserID = table.Column<string>(nullable: true),
+                    ApplicationUserID = table.Column<string>(nullable: true),
                     ShippingMethodID = table.Column<int>(nullable: false),
                     DateAndTime = table.Column<DateTime>(nullable: false),
                     Note = table.Column<string>(maxLength: 400, nullable: true),
@@ -203,17 +184,17 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 {
                     table.PrimaryKey("PK_orders", x => x.ID);
                     table.ForeignKey(
+                        name: "FK_orders_AspNetUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_orders_shipping_methods_ShippingMethodID",
                         column: x => x.ShippingMethodID,
                         principalTable: "shipping_methods",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_orders_ApplicationUser_UserID",
-                        column: x => x.UserID,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,27 +239,27 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserID = table.Column<long>(nullable: false),
+                    ApplicationUserID = table.Column<long>(nullable: false),
                     OrderID = table.Column<long>(nullable: false),
                     TotalValue = table.Column<decimal>(nullable: false),
                     DateIssued = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_invoices", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_invoices_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_invoices_orders_OrderID",
                         column: x => x.OrderID,
                         principalTable: "orders",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_invoices_ApplicationUser_UserId",
-                        column: x => x.UserId,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,27 +318,27 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 {
                     ID = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserID = table.Column<long>(nullable: false),
+                    ApplicationUserID = table.Column<long>(nullable: false),
                     ProductID = table.Column<long>(nullable: false),
                     Rating = table.Column<int>(nullable: false),
                     Content = table.Column<string>(maxLength: 1024, nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_reviews", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_reviews_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_reviews_products_ProductID",
                         column: x => x.ProductID,
                         principalTable: "products",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_reviews_ApplicationUser_UserId",
-                        column: x => x.UserId,
-                        principalTable: "ApplicationUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -404,14 +385,14 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 column: "ProductID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_invoices_ApplicationUserId",
+                table: "invoices",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_invoices_OrderID",
                 table: "invoices",
                 column: "OrderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_invoices_UserId",
-                table: "invoices",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_order_details_OrderID",
@@ -424,24 +405,24 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 column: "ProductID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_orders_ApplicationUserID",
+                table: "orders",
+                column: "ApplicationUserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_orders_ShippingMethodID",
                 table: "orders",
                 column: "ShippingMethodID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_UserID",
-                table: "orders",
-                column: "UserID");
+                name: "IX_payment_methods_ApplicationUserId",
+                table: "payment_methods",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_payment_methods_PaymentTypeID",
                 table: "payment_methods",
                 column: "PaymentTypeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_payment_methods_UserId",
-                table: "payment_methods",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_producer_details_ProducerID",
@@ -464,14 +445,14 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 column: "SubcategoryID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_reviews_ApplicationUserId",
+                table: "reviews",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_reviews_ProductID",
                 table: "reviews",
                 column: "ProductID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_reviews_UserId",
-                table: "reviews",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subcategories_CategoryID",
@@ -479,9 +460,9 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_user_details_UserID",
+                name: "IX_user_details_ApplicationUserID",
                 table: "user_details",
-                column: "UserID");
+                column: "ApplicationUserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -529,10 +510,11 @@ namespace online_shop_backend.Migrations.ApplicationDb
                 name: "shipping_methods");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUser");
-
-            migrationBuilder.DropTable(
                 name: "categories");
+
+            migrationBuilder.DropColumn(
+                name: "Discriminator",
+                table: "AspNetUsers");
         }
     }
 }

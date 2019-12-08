@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using online_shop_backend.Models.Entities;
 using online_shop_backend.Models.Identity;
 
 namespace online_shop_backend
@@ -27,9 +28,12 @@ namespace online_shop_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkNpgsql()
-                .AddDbContext<ApplicationDBContext>(options =>
+                .AddDbContext<ApplicationIdentityDbContext>(options =>
                     options.UseNpgsql(Configuration["ConnectionStrings:OnlineShopDatabase"]))
                 .BuildServiceProvider();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(Configuration["ConnectionStrings:OnlineShopDatabase"]));
             
             services.AddControllers();
         }

@@ -9,7 +9,7 @@ using online_shop_backend.Models.Identity;
 
 namespace online_shop_backend.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(ApplicationIdentityDbContext))]
     [Migration("20191129200901_Initial")]
     partial class Initial
     {

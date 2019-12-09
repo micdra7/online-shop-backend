@@ -1,0 +1,136 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj": {}
+  },
+  "projects": {
+    "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj",
+        "projectName": "online-shop-backend.tests",
+        "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj",
+        "packagesPath": "/Users/michal/.nuget/packages/",
+        "outputPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/michal/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj": {
+                "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.2.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj",
+        "projectName": "online-shop-backend",
+        "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj",
+        "packagesPath": "/Users/michal/.nuget/packages/",
+        "outputPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/michal/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

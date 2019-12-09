@@ -5,7 +5,7 @@
 -- Dumped from database version 12.0
 -- Dumped by pg_dump version 12.0
 
--- Started on 2019-12-08 21:25:56 CET
+-- Started on 2019-12-09 12:23:19 CET
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -764,6 +764,10 @@ COPY public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") FROM stdin
 --
 
 COPY public.categories ("ID", "Name") FROM stdin;
+1	Components
+2	Peripherals
+3	Software
+4	Services
 \.
 
 
@@ -834,6 +838,10 @@ COPY public.payment_methods ("ID", "PaymentTypeID", "ApplicationUserID", "Value"
 --
 
 COPY public.payment_types ("ID", "Name") FROM stdin;
+1	Card
+2	Paypal
+3	Transfer
+4	Cash-on-delivery
 \.
 
 
@@ -854,6 +862,30 @@ COPY public.producer_details ("ID", "ProducerID", "PhoneNumber", "Email", "Addre
 --
 
 COPY public.producers ("ID", "Name") FROM stdin;
+1	Intel
+2	AMD
+3	NVidia
+4	MSI
+5	Gigabyte
+6	ASUS
+7	AsRock
+8	Zotac
+9	Acer
+10	Corsair
+11	NZXT
+12	Thermaltake
+13	EVGA
+14	Crucial
+15	Kingston
+16	Seagate
+17	Toshiba
+18	WD
+19	ADATA
+20	Samsung
+21	Microsoft
+22	EA
+23	Valve
+24	CD Projekt RED
 \.
 
 
@@ -864,6 +896,23 @@ COPY public.producers ("ID", "Name") FROM stdin;
 --
 
 COPY public.products ("ID", "ProducerID", "CategoryID", "SubcategoryID", "Name", "Price", "AvailableQuantity") FROM stdin;
+1	1	1	1	Core i9 9900K	500	45
+2	2	1	1	Ryzen 9 3950X	400	70
+3	2	1	2	Radeon RX 5700XT	400	90
+4	3	1	2	RTX 2070 Super	450	60
+5	4	1	3	B450 Tomahawk MAX	100	25
+6	6	1	3	Crosshair VIII	300	15
+7	14	1	4	Ballistix Sport LT 3000 MHz 16GB (2x8)	70	120
+8	20	1	5	970 EVO 256GB	90	80
+9	13	1	6	850W Platinum	150	55
+10	11	1	7	H500i	90	89
+11	10	1	8	H110i	150	35
+12	9	2	9	Predator 144Hz	250	25
+13	10	2	10	13000 DPI Mouse	80	15
+14	10	2	11	K70 Mechanical Keyboard	110	60
+15	10	2	12	VOID RGB	70	20
+16	21	3	13	Windows 10 Home	100	200
+17	24	3	14	Witcher 3	20	340
 \.
 
 
@@ -884,6 +933,8 @@ COPY public.reviews ("ID", "ApplicationUserID", "ProductID", "Rating", "Content"
 --
 
 COPY public.shipping_methods ("ID", "Name", "Price") FROM stdin;
+1	Courier	10
+2	Post	8
 \.
 
 
@@ -894,6 +945,22 @@ COPY public.shipping_methods ("ID", "Name", "Price") FROM stdin;
 --
 
 COPY public.subcategories ("ID", "CategoryID", "Name") FROM stdin;
+1	1	Processors
+2	1	Graphics Cards
+3	1	Motherboards
+4	1	RAM Memory
+5	1	Storage
+6	1	Power Supplies
+7	1	Cases
+8	1	Cooling
+9	2	Monitors
+10	2	Mice
+11	2	Keyboards
+12	2	Headsets
+13	3	Operating Systems
+14	3	Games
+15	3	Other
+16	4	Construction
 \.
 
 
@@ -931,7 +998,7 @@ SELECT pg_catalog.setval('public."AspNetUserClaims_Id_seq"', 1, false);
 -- Name: categories_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."categories_ID_seq"', 1, false);
+SELECT pg_catalog.setval('public."categories_ID_seq"', 4, true);
 
 
 --
@@ -994,7 +1061,7 @@ SELECT pg_catalog.setval('public."payment_methods_ID_seq"', 1, false);
 -- Name: payment_types_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."payment_types_ID_seq"', 1, false);
+SELECT pg_catalog.setval('public."payment_types_ID_seq"', 4, true);
 
 
 --
@@ -1012,7 +1079,7 @@ SELECT pg_catalog.setval('public."producer_details_ID_seq"', 1, false);
 -- Name: producers_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."producers_ID_seq"', 1, false);
+SELECT pg_catalog.setval('public."producers_ID_seq"', 24, true);
 
 
 --
@@ -1021,7 +1088,7 @@ SELECT pg_catalog.setval('public."producers_ID_seq"', 1, false);
 -- Name: products_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."products_ID_seq"', 1, false);
+SELECT pg_catalog.setval('public."products_ID_seq"', 17, true);
 
 
 --
@@ -1039,7 +1106,7 @@ SELECT pg_catalog.setval('public."reviews_ID_seq"', 1, false);
 -- Name: shipping_methods_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."shipping_methods_ID_seq"', 1, false);
+SELECT pg_catalog.setval('public."shipping_methods_ID_seq"', 2, true);
 
 
 --
@@ -1048,7 +1115,7 @@ SELECT pg_catalog.setval('public."shipping_methods_ID_seq"', 1, false);
 -- Name: subcategories_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."subcategories_ID_seq"', 1, false);
+SELECT pg_catalog.setval('public."subcategories_ID_seq"', 16, true);
 
 
 --
@@ -1700,7 +1767,7 @@ ALTER TABLE ONLY public.user_details
     ADD CONSTRAINT "FK_user_details_AspNetUsers_ApplicationUserID" FOREIGN KEY ("ApplicationUserID") REFERENCES public."AspNetUsers"("Id") ON DELETE RESTRICT;
 
 
--- Completed on 2019-12-08 21:25:57 CET
+-- Completed on 2019-12-09 12:23:19 CET
 
 --
 -- PostgreSQL database dump complete

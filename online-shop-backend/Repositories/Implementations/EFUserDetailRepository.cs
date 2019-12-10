@@ -45,7 +45,9 @@ namespace online_shop_backend.Repositories.Implementations
 
         public ApplicationUser GetUserForUserDetail(long id)
         {
-            return context.UserDetails.Find(id)?.ApplicationUser;
+            return (ApplicationUser) context.Users.Find(
+                context.UserDetails.Find(id)?.ApplicationUserID
+            );
         }
     }
 }

@@ -45,17 +45,21 @@ namespace online_shop_backend.Repositories.Implementations
 
         public ApplicationUser GetUserForOrder(long id)
         {
-            return context.Orders.Find(id)?.ApplicationUser;
+            return (ApplicationUser) context.Users.Find(
+                context.Orders.Find(id)?.ApplicationUserID
+            );
         }
 
         public ShippingMethod GetShippingMethodForOrder(long id)
         {
-            return context.Orders.Find(id)?.ShippingMethod;
+            return context.ShippingMethods.Find(
+                context.Orders.Find(id)?.ShippingMethodID
+            );
         }
 
         public ICollection<OrderDetail> GetDetailsForOrder(long id)
         {
-            return context.Orders.Find(id)?.Details;
+            return context.OrderDetails.Where(od => od.OrderID == id).ToList();
         }
     }
 }

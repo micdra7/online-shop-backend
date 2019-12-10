@@ -9,10 +9,13 @@ namespace online_shop_backend.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoriesRepository categoriesRepository;
+        private readonly ISubcategoriesRepository subcategoriesRepository;
 
-        public CategoryController(ICategoriesRepository categoriesRepository)
+        public CategoryController(ICategoriesRepository categoriesRepository, 
+            ISubcategoriesRepository subcategoriesRepository)
         {
             this.categoriesRepository = categoriesRepository;
+            this.subcategoriesRepository = subcategoriesRepository;
         }
         
         [HttpGet]
@@ -24,7 +27,10 @@ namespace online_shop_backend.Controllers
         [HttpGet("{id:required}")]
         public Category Category(int id)
         {
-            return categoriesRepository.GetCategory(id);
+            var category = categoriesRepository.GetCategory(id);
+            category.Subcategories = categoriesRepository.GetSubcategoriesForCategory(id);
+            
+            return category;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace online_shop_backend.Repositories.Implementations
 
         public ICollection<Subcategory> GetSubcategoriesForCategory(int id)
         {
-            return context.Categories.Find(id)?.Subcategories;
+            return context.Subcategories.Where(s => s.CategoryID == id).ToList();
         }
     }
 }

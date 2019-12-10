@@ -50,22 +50,26 @@ namespace online_shop_backend.Repositories.Implementations
 
         public Category GetCategoryForProduct(long id)
         {
-            return context.Products.Find(id)?.Category;
+            return context.Categories.Find(
+                context.Products.Find(id)?.CategoryID
+            );
         }
 
         public Subcategory GetSubcategoryForProduct(long id)
         {
-            return context.Products.Find(id)?.Subcategory;
+            return context.Subcategories.Find(
+                context.Products.Find(id)?.Subcategory
+            );
         }
 
         public ICollection<Review> GetReviewsForProduct(long id)
         {
-            return context.Products.Find(id)?.Reviews;
+            return context.Reviews.Where(r => r.ProductID == id).ToList(); 
         }
 
         public ICollection<Discount> GetDiscountsForProduct(long id)
         {
-            return context.Products.Find(id)?.Discounts;
+            return context.Discounts.Where(d => d.ProductID == id).ToList();
         }
     }
 }

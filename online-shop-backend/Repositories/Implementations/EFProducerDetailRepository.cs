@@ -45,7 +45,9 @@ namespace online_shop_backend.Repositories.Implementations
 
         public Producer GetProducerForProducerDetail(long id)
         {
-            return context.ProducerDetails.Find(id)?.Producer;
+            return context.Producers.Find(
+                context.ProducerDetails.Find(id)?.ProducerID
+            );
         }
     }
 }

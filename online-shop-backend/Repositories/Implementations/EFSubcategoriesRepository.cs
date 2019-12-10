@@ -45,7 +45,8 @@ namespace online_shop_backend.Repositories.Implementations
 
         public Category GetCategoryForSubcategory(int id)
         {
-            return context.Subcategories.Find(id)?.Category;
+            return context.Categories.First(
+                c => c.Subcategories.Contains(context.Subcategories.Find(id)));
         }
     }
 }

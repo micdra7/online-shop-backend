@@ -45,12 +45,16 @@ namespace online_shop_backend.Repositories.Implementations
 
         public ApplicationUser GetUserForReview(long id)
         {
-            return context.Reviews.Find(id)?.ApplicationUser;
+            return (ApplicationUser) context.Users.Find(
+                context.Reviews.Find(id)?.ApplicationUserID
+            );
         }
 
         public Product GetProductForReview(long id)
         {
-            return context.Reviews.Find(id)?.Product;
+            return context.Products.Find(
+                context.Reviews.Find(id)?.Product
+            );
         }
     }
 }

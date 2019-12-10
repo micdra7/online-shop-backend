@@ -45,7 +45,7 @@ namespace online_shop_backend.Repositories.Implementations
 
         public ICollection<ProducerDetail> GetDetailsForProducer(int id)
         {
-            return context.Producers.Find(id)?.Details;
+            return context.ProducerDetails.Where(pd => pd.ID == id).ToList();
         }
     }
 }

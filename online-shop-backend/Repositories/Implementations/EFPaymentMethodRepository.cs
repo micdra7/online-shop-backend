@@ -45,12 +45,16 @@ namespace online_shop_backend.Repositories.Implementations
 
         public PaymentType GetTypeForPaymentMethod(long id)
         {
-            return context.PaymentMethods.Find(id)?.PaymentType;
+            return context.PaymentTypes.Find(
+                context.PaymentMethods.Find(id)?.PaymentTypeID
+            );
         }
 
         public ApplicationUser GetUserForPaymentMethod(long id)
         {
-            return context.PaymentMethods.Find(id)?.ApplicationUser;
+            return (ApplicationUser) context.Users.Find(
+                context.PaymentMethods.Find(id)?.ApplicationUser
+            );
         }
     }
 }

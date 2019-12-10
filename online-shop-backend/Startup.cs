@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using online_shop_backend.Models.Entities;
 using online_shop_backend.Models.Identity;
+using online_shop_backend.Repositories.Implementations;
+using online_shop_backend.Repositories.Interfaces;
 
 namespace online_shop_backend
 {
@@ -27,10 +29,24 @@ namespace online_shop_backend
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(Configuration["ConnectionStrings:OnlineShopDatabase"]))
-                .BuildServiceProvider();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(Configuration["ConnectionStrings:OnlineShopDatabase"]));
+
+            services.AddTransient<ICategoriesRepository, EFCategoriesRepository>();
+            services.AddTransient<ISubcategoriesRepository, EFSubcategoriesRepository>();
+            services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddTransient<IProducerRepository, EFProducerRepository>();
+            services.AddTransient<IProducerDetailRepository, EFProducerDetailRepository>();
+            services.AddTransient<IInvoiceRepository, EFInvoiceRepository>();
+            services.AddTransient<IInvoiceDetailRepository, EFInvoiceDetailRepository>();
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
+            services.AddTransient<IOrderDetailRepository, EFOrderDetailRepository>();
+            services.AddTransient<IPaymentTypeRepository, EFPaymentTypeRepository>();
+            services.AddTransient<IPaymentMethodRepository, EFPaymentMethodRepository>();
+            services.AddTransient<IDiscountRepository, EFDiscountRepository>();
+            services.AddTransient<IReviewRepository, EFReviewRepository>();
+            services.AddTransient<IUserDetailRepository, EFUserDetailRepository>();
+            services.AddTransient<IShippingMethodRepository, EFShippingMethodRepository>();
 
             services.AddControllers();
         }

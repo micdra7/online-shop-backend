@@ -19,7 +19,7 @@ namespace online_shop_backend.tests.Tests.Controllers
         }
 
         [Fact]
-        void ReturnsAListOfAllSubcategories()
+        public void ReturnsAListOfAllSubcategories()
         {
             var result = subcategoryController.Index();
             
@@ -30,7 +30,7 @@ namespace online_shop_backend.tests.Tests.Controllers
         [Theory]
         [InlineData(1)]
         [InlineData(3)]
-        void ReturnsSubcategoryAndItsProducts(int id)
+        public void ReturnsSubcategoryAndItsProducts(int id)
         {
             var result = subcategoryController.Subcategory(id, null, null);
 

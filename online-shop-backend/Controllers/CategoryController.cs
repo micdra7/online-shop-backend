@@ -10,13 +10,10 @@ namespace online_shop_backend.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoriesRepository categoriesRepository;
-        private readonly ISubcategoriesRepository subcategoriesRepository;
 
-        public CategoryController(ICategoriesRepository categoriesRepository, 
-            ISubcategoriesRepository subcategoriesRepository)
+        public CategoryController(ICategoriesRepository categoriesRepository)
         {
             this.categoriesRepository = categoriesRepository;
-            this.subcategoriesRepository = subcategoriesRepository;
         }
         
         [HttpGet]

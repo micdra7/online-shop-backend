@@ -11,5 +11,6 @@ namespace online_shop_backend.Repositories.Interfaces
         Subcategory GetSubcategory(int id);
         ICollection<Subcategory> GetAllSubcategories();
         Category GetCategoryForSubcategory(int id);
+        ICollection<Product> GetProductsForSubcategory(int id, int page = 1, int limit = 20);
     }
 }

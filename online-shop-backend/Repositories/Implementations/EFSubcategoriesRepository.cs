@@ -48,5 +48,12 @@ namespace online_shop_backend.Repositories.Implementations
             return context.Categories.First(
                 c => c.Subcategories.Contains(context.Subcategories.Find(id)));
         }
+
+        public ICollection<Product> GetProductsForSubcategory(int id, int page = 1, int limit = 20)
+        {
+            return context.Products.Where(p => p.SubcategoryID == id)
+                .Skip((page - 1) * limit).Take(limit)
+                .ToList();
+        }
     }
 }

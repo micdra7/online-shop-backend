@@ -15,6 +15,7 @@ using online_shop_backend.Models.Entities;
 using online_shop_backend.Models.Identity;
 using online_shop_backend.Repositories.Implementations;
 using online_shop_backend.Repositories.Interfaces;
+using Newtonsoft.Json;
 
 namespace online_shop_backend
 {
@@ -48,7 +49,9 @@ namespace online_shop_backend
             services.AddTransient<IUserDetailRepository, EFUserDetailRepository>();
             services.AddTransient<IShippingMethodRepository, EFShippingMethodRepository>();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

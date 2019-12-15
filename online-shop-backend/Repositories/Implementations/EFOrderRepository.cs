@@ -18,6 +18,12 @@ namespace online_shop_backend.Repositories.Implementations
         public void AddOrder(Order order)
         {
             context.Orders.Add(order);
+            
+            foreach (var orderDetail in order.Details)
+            {
+                context.Products.Find(orderDetail.ProductID).AvailableQuantity -= orderDetail.Quantity;
+            }
+            
             context.SaveChanges();
         }
 

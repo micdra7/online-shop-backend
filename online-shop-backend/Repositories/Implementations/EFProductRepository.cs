@@ -45,7 +45,9 @@ namespace online_shop_backend.Repositories.Implementations
 
         public Producer GetProducerForProduct(long id)
         {
-            return context.Products.Find(id)?.Producer;
+            return context.Producers.Find(
+                context.Products.Find(id)?.ProducerID
+            );
         }
 
         public Category GetCategoryForProduct(long id)
@@ -58,7 +60,7 @@ namespace online_shop_backend.Repositories.Implementations
         public Subcategory GetSubcategoryForProduct(long id)
         {
             return context.Subcategories.Find(
-                context.Products.Find(id)?.Subcategory
+                context.Products.Find(id)?.SubcategoryID
             );
         }
 
@@ -70,6 +72,11 @@ namespace online_shop_backend.Repositories.Implementations
         public ICollection<Discount> GetDiscountsForProduct(long id)
         {
             return context.Discounts.Where(d => d.ProductID == id).ToList();
+        }
+
+        public bool CheckIfProductIsAvailable(long id, int neededQuantity = 0)
+        {
+            return context.Products.Find(id).AvailableQuantity > neededQuantity;
         }
     }
 }

@@ -15,5 +15,6 @@ namespace online_shop_backend.Repositories.Interfaces
         Subcategory GetSubcategoryForProduct(long id);
         ICollection<Review> GetReviewsForProduct(long id);
         ICollection<Discount> GetDiscountsForProduct(long id);
+        bool CheckIfProductIsAvailable(long id, int neededQuantity = 0);
     }
 }

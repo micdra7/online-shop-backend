@@ -73,5 +73,10 @@ namespace online_shop_backend.Repositories.Implementations
         {
             return context.Discounts.Where(d => d.ProductID == id).ToList();
         }
+
+        public bool CheckIfProductIsAvailable(long id, int neededQuantity = 0)
+        {
+            return context.Products.Find(id).AvailableQuantity > neededQuantity;
+        }
     }
 }

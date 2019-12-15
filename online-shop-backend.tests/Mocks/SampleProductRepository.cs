@@ -118,5 +118,10 @@ namespace online_shop_backend.tests.Mocks
         {
             return Products.First(p => p.ID == id)?.Discounts;
         }
+
+        public bool CheckIfProductIsAvailable(long id, int neededQuantity = 0)
+        {
+            return Products.First(p => p.ID == id).AvailableQuantity >= neededQuantity;
+        }
     }
 }

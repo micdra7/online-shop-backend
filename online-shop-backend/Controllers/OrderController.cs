@@ -14,14 +14,11 @@ namespace online_shop_backend.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderRepository orderRepository;
-        private readonly IOrderDetailRepository orderDetailRepository;
         private readonly IProductRepository productRepository;
 
-        public OrderController(IOrderRepository orderRepository, IOrderDetailRepository orderDetailRepository,
-            IProductRepository productRepository)
+        public OrderController(IOrderRepository orderRepository, IProductRepository productRepository)
         {
             this.orderRepository = orderRepository;
-            this.orderDetailRepository = orderDetailRepository;
             this.productRepository = productRepository;
         }
         
@@ -40,6 +37,11 @@ namespace online_shop_backend.Controllers
 
             foreach (var item in cart.CartItems)
             {
+                if (!productRepository.CheckIfProductIsAvailable(item.ProductID, item.Quantity))
+                {
+                    return null;
+                }
+                
                 orderToAdd.Details.Add(new OrderDetail
                 {
                     ProductID = item.ProductID,

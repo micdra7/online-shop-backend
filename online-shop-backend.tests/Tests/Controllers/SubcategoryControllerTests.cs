@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using online_shop_backend.Controllers;
 using online_shop_backend.Models.DTO;
+using online_shop_backend.Repositories.Interfaces;
 using online_shop_backend.tests.Mocks;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace online_shop_backend.tests.Tests.Controllers
     public class SubcategoryControllerTests
     {
         private readonly SubcategoryController subcategoryController;
-        private readonly SampleSubcategoriesRepository subcategoriesRepository;
+        private readonly ISubcategoriesRepository subcategoriesRepository;
 
         public SubcategoryControllerTests()
         {

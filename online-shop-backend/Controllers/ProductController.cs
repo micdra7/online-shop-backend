@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using online_shop_backend.Models.Entities;
 using online_shop_backend.Repositories.Interfaces;
@@ -8,10 +9,12 @@ namespace online_shop_backend.Controllers
     public class ProductController : Controller
     {
         private readonly IProductRepository productRepository;
+        private readonly IDiscountRepository discountRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, IDiscountRepository discountRepository)
         {
             this.productRepository = productRepository;
+            this.discountRepository = discountRepository;
         }
         
         [HttpGet("{id:required}")]
@@ -24,6 +27,12 @@ namespace online_shop_backend.Controllers
             result.Discounts = productRepository.GetDiscountsForProduct(id);
             
             return result;
+        }
+
+        [HttpGet("discounts")]
+        public ICollection<Discount> Discounts()
+        {
+            return discountRepository.GetAllDiscounts();
         }
     }
 }

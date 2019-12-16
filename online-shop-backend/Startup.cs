@@ -17,6 +17,7 @@ using online_shop_backend.Models.Identity;
 using online_shop_backend.Repositories.Implementations;
 using online_shop_backend.Repositories.Interfaces;
 using Newtonsoft.Json;
+using online_shop_backend.Utils;
 
 namespace online_shop_backend
 {
@@ -49,6 +50,9 @@ namespace online_shop_backend
             services.AddTransient<IReviewRepository, EFReviewRepository>();
             services.AddTransient<IUserDetailRepository, EFUserDetailRepository>();
             services.AddTransient<IShippingMethodRepository, EFShippingMethodRepository>();
+            services.AddTransient<IRefreshTokenRepository, EFRefreshTokenRepository>();
+
+            services.AddTransient<TokenFactory>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

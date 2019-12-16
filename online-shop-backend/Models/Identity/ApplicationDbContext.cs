@@ -26,6 +26,7 @@ namespace online_shop_backend.Models.Identity
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public DbSet<Discount> Discounts { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +47,7 @@ namespace online_shop_backend.Models.Identity
             modelBuilder.Entity<Invoice>().ToTable("invoices");
             modelBuilder.Entity<InvoiceDetail>().ToTable("invoice_details");
             modelBuilder.Entity<Discount>().ToTable("discounts");
+            modelBuilder.Entity<RefreshToken>().ToTable("refresh_tokens");
         }
     }
 }

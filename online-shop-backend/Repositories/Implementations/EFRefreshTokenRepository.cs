@@ -29,14 +29,14 @@ namespace online_shop_backend.Repositories.Implementations
 
         public bool IsRefreshTokenActive(RefreshToken refreshToken)
         {
-            return DateTime.Now > context.RefreshTokens
+            return DateTime.Now <= context.RefreshTokens
                 .First(rt => rt.Token == refreshToken.Token)
                 .ExpiryDate;
         }
 
         public bool IsRefreshTokenActive(string refreshToken)
         {
-            return DateTime.Now > context.RefreshTokens
+            return DateTime.Now <= context.RefreshTokens
                 .First(rt => rt.Token == refreshToken)
                 .ExpiryDate;
         }

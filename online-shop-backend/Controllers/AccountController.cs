@@ -1,8 +1,16 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using online_shop_backend.Models.DTO;
 using online_shop_backend.Models.Entities;
 using online_shop_backend.Models.Identity;
@@ -15,12 +23,17 @@ namespace online_shop_backend.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IRefreshTokenRepository refreshTokenRepository;
+        private readonly IConfiguration configuration;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IRefreshTokenRepository refreshTokenRepository)
+        public AccountController(UserManager<ApplicationUser> userManager, IRefreshTokenRepository refreshTokenRepository,
+            IConfiguration configuration,  RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.refreshTokenRepository = refreshTokenRepository;
+            this.configuration = configuration;
+            this.roleManager = roleManager;
         }
         
         [HttpPost("register")]
@@ -46,6 +59,8 @@ namespace online_shop_backend.Controllers
             };
 
             var result = await userManager.CreateAsync(userToAdd, user.Password);
+
+            await userManager.AddToRoleAsync(userToAdd, Constants.USER);
 
             return result.Succeeded ? 
                 Ok(IdentityResult.Success) as IActionResult : 
@@ -73,9 +88,47 @@ namespace online_shop_backend.Controllers
                         ApplicationUserID = user.Id, 
                         ExpiryDate = DateTime.Now.AddDays(5)
                     });
+
+                var jwt = await GenerateJwt(user);
+
+                return Ok(new {jwt, refreshToken});
             }
 
             return BadRequest("Error while logging in. Please try later.");
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenDTO tokenDto)
+        {
+            if (refreshTokenRepository.IsRefreshTokenActive(tokenDto.RefreshToken))
+            {
+                var user = await userManager.FindByNameAsync(tokenDto.User.Username);
+                var jwt = await GenerateJwt(user);
+
+                return Ok(new {jwt, tokenDto.RefreshToken});
+            }
+
+            return BadRequest("Invalid refresh token");
+        }
+
+        private async Task<string> GenerateJwt(ApplicationUser user)
+        {
+            var identity = new ClaimsIdentity(
+                new[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserName)
+                });
+            
+            var secretKey = Encoding.ASCII.GetBytes(configuration["SecretKey"]);
+
+            var claims = (await userManager.GetRolesAsync(user))
+                .Select(r => new Claim(ClaimTypes.Role, r));
+
+            var token = new JwtSecurityToken(configuration["Issuer"],  configuration["Issuer"],
+                claims, null, DateTime.UtcNow.AddHours(6), new SigningCredentials(
+                    new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature));
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
         
     }

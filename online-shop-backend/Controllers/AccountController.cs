@@ -23,17 +23,15 @@ namespace online_shop_backend.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IRefreshTokenRepository refreshTokenRepository;
         private readonly IConfiguration configuration;
 
         public AccountController(UserManager<ApplicationUser> userManager, IRefreshTokenRepository refreshTokenRepository,
-            IConfiguration configuration,  RoleManager<IdentityRole> roleManager)
+            IConfiguration configuration)
         {
             this.userManager = userManager;
             this.refreshTokenRepository = refreshTokenRepository;
             this.configuration = configuration;
-            this.roleManager = roleManager;
         }
         
         [HttpPost("register")]

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,29 @@ namespace online_shop_backend.Controllers
             orderRepository.AddOrder(orderToAdd);
             
             return orderToAdd;
+        }
+
+        [HttpGet("last")]
+        public List<Product> GetLastOrderedProducts()
+        {
+            var lastOrders = orderRepository.GetAllOrders().Take(3);
+
+            var productsToReturn = new List<Product>();
+
+            var orders = lastOrders.ToList();
+            if (orders.Any())
+            {
+                foreach (var order in orders)
+                {
+                    foreach (var detail in orderRepository.GetDetailsForOrder(order.ID))
+                    {
+                        productsToReturn.Add(
+                            productRepository.GetProduct(detail.ProductID));
+                    }
+                }
+            }
+            
+            return productsToReturn;
         }
     }
 }

@@ -88,7 +88,8 @@ namespace online_shop_backend
             {
                 options.AddPolicy(MyCorsPolicy, builder =>
                     {
-                        builder.WithOrigins("http://0.0.0.0:8080", "http://localhost:8080");
+                        builder.WithOrigins("http://0.0.0.0:8080", "http://localhost:8080", 
+                            "https://0.0.0.0:8080", "https://localhost:8080");
                     });
             });
             

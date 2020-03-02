@@ -76,7 +76,7 @@ namespace online_shop_backend.Controllers
                 }
             }
             
-            return productsToReturn;
+            return productsToReturn.Take(4).ToList();
         }
     }
 }

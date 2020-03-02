@@ -33,6 +33,8 @@ namespace online_shop_backend
 
         public IConfiguration Configuration { get; }
 
+        private readonly string MyCorsPolicy = "MyCorsPolicy";
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -81,6 +83,15 @@ namespace online_shop_backend
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyCorsPolicy, builder =>
+                    {
+                        builder.WithOrigins("http://0.0.0.0:8080", "http://localhost:8080", 
+                            "https://0.0.0.0:8080", "https://localhost:8080");
+                    });
+            });
             
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -94,9 +105,13 @@ namespace online_shop_backend
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyCorsPolicy);
 
             app.UseAuthentication();
             

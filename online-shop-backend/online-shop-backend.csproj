@@ -7,6 +7,7 @@
 
     <ItemGroup>
       <Folder Include="Migrations\ApplicationDb" />
+      <Folder Include="wwwroot\images" />
     </ItemGroup>
 
     <ItemGroup>

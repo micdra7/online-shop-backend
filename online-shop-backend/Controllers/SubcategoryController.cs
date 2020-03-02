@@ -10,10 +10,12 @@ namespace online_shop_backend.Controllers
     public class SubcategoryController : Controller
     {
         private readonly ISubcategoriesRepository subcategoriesRepository;
+        private readonly IProducerRepository producerRepository;
 
-        public SubcategoryController(ISubcategoriesRepository subcategoriesRepository)
+        public SubcategoryController(ISubcategoriesRepository subcategoriesRepository, IProducerRepository producerRepository)
         {
             this.subcategoriesRepository = subcategoriesRepository;
+            this.producerRepository = producerRepository;
         }
         
         [HttpGet]
@@ -31,6 +33,11 @@ namespace online_shop_backend.Controllers
                 Products = subcategoriesRepository.GetProductsForSubcategory(id, page ?? 1, limit ?? 20)
             };
 
+            foreach (var product in result.Products)
+            {
+                product.Producer = producerRepository.GetProducer(product.ProducerID);
+            }
+            
             return result;
         }
     }

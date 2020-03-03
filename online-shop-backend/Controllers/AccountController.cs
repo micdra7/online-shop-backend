@@ -58,7 +58,10 @@ namespace online_shop_backend.Controllers
 
             var result = await userManager.CreateAsync(userToAdd, user.Password);
 
-            await userManager.AddToRoleAsync(userToAdd, Constants.USER);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(userToAdd, Constants.USER);   
+            }
 
             return result.Succeeded ? 
                 Ok(IdentityResult.Success) as IActionResult : 

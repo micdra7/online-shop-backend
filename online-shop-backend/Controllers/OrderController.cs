@@ -24,7 +24,7 @@ namespace online_shop_backend.Controllers
         }
         
         [HttpPost]
-//        [Authorize(Roles = )]
+        [Authorize]
         public Order Index([FromBody] CartDTO cart)
         {
             var orderToAdd = new Order

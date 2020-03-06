@@ -29,7 +29,7 @@ namespace online_shop_backend.Controllers
             
             return result;
         }
-
+        
         [HttpGet("selected")]
         public List<Product> GetSelectedProducts([FromQuery] int[] ids)
         {

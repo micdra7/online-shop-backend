@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,18 +21,35 @@ using online_shop_backend.Utils;
 namespace online_shop_backend.Controllers
 {
     [Route("/api/account")]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRefreshTokenRepository refreshTokenRepository;
         private readonly IConfiguration configuration;
+        private readonly IUserDetailRepository userDetailRepository;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IRefreshTokenRepository refreshTokenRepository,
-            IConfiguration configuration)
+        public AccountController(
+                UserManager<ApplicationUser> userManager,
+                IRefreshTokenRepository refreshTokenRepository,
+                IConfiguration configuration,
+                IUserDetailRepository userDetailRepository)
         {
             this.userManager = userManager;
             this.refreshTokenRepository = refreshTokenRepository;
             this.configuration = configuration;
+            this.userDetailRepository = userDetailRepository;
+        }
+
+        [HttpPost("details")]
+        [Authorize]
+        public async Task<List<UserDetail>> GetCurrentUserDetails([FromBody] UserDTO user)
+        {
+            if (user.Username == null) return null;
+            
+            var retrievedUser = await userManager.FindByNameAsync(user.Username);
+
+            return userDetailRepository.GetDetailsForUser(retrievedUser.Id).ToList();
         }
         
         [HttpPost("register")]

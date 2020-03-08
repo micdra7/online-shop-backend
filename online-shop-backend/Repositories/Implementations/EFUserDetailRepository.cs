@@ -43,6 +43,11 @@ namespace online_shop_backend.Repositories.Implementations
             return context.UserDetails.ToList();
         }
 
+        public ICollection<UserDetail> GetDetailsForUser(string userId)
+        {
+            return context.UserDetails.Where(detail => detail.ApplicationUserID == userId).ToList();
+        }
+
         public ApplicationUser GetUserForUserDetail(long id)
         {
             return (ApplicationUser) context.Users.Find(

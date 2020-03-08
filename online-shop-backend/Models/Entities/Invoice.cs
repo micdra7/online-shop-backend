@@ -9,7 +9,7 @@ namespace online_shop_backend.Models.Entities
     {
         public long ID { get; set; }
         
-        public long ApplicationUserID { get; set; }
+        public string ApplicationUserID { get; set; }
         
         public long OrderID { get; set; }
         

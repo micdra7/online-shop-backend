@@ -11,6 +11,7 @@ namespace online_shop_backend.Repositories.Interfaces
         void UpdateUserDetail(UserDetail userDetail);
         UserDetail GetUserDetail(long id);
         ICollection<UserDetail> GetAllUserDetails();
+        ICollection<UserDetail> GetDetailsForUser(string userId);
         ApplicationUser GetUserForUserDetail(long id);
     }
 }

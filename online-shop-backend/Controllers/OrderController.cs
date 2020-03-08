@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,24 +13,36 @@ using online_shop_backend.Repositories.Interfaces;
 namespace online_shop_backend.Controllers
 {
     [Route("/api/order")]
+    [AllowAnonymous]
     public class OrderController : Controller
     {
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
+        private readonly IShippingMethodRepository shippingMethodRepository;
+        private readonly IPaymentTypeRepository paymentTypeRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public OrderController(IOrderRepository orderRepository, IProductRepository productRepository)
+        public OrderController(
+                IOrderRepository orderRepository, 
+                IProductRepository productRepository,
+                IShippingMethodRepository shippingMethodRepository,
+                IPaymentTypeRepository paymentTypeRepository,
+                UserManager<ApplicationUser> userManager)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
+            this.shippingMethodRepository = shippingMethodRepository;
+            this.paymentTypeRepository = paymentTypeRepository;
+            this.userManager = userManager;
         }
         
         [HttpPost]
-//        [Authorize(Roles = )]
-        public Order Index([FromBody] CartDTO cart)
+        [Authorize]
+        public async Task<Order> Index([FromBody] CartDTO cart)
         {
             var orderToAdd = new Order
             {
-                ApplicationUserID = cart.UserID,
+                ApplicationUserID = (await userManager.FindByNameAsync(cart.Username)).Id,
                 ShippingMethodID = cart.ShippingMethodID,
                 Note = cart.Note,
                 DateAndTime = DateTime.Now,
@@ -52,6 +65,14 @@ namespace online_shop_backend.Controllers
             }
             
             orderRepository.AddOrder(orderToAdd);
+
+            foreach (var detail in orderToAdd.Details)
+            {
+                var product = detail.Product;
+                product.AvailableQuantity -= detail.Quantity;
+                
+                productRepository.UpdateProduct(product);
+            }
             
             return orderToAdd;
         }
@@ -77,6 +98,18 @@ namespace online_shop_backend.Controllers
             }
             
             return productsToReturn.Take(4).ToList();
+        }
+
+        [HttpGet("shipping-methods")]
+        public List<ShippingMethod> GetShippingMethods()
+        {
+            return shippingMethodRepository.GetAllShippingMethods().ToList();
+        }
+
+        [HttpGet("payment-types")]
+        public List<PaymentType> GetPaymentTypes()
+        {
+            return paymentTypeRepository.GetAllPaymentTypes().ToList();
         }
     }
 }

@@ -7,13 +7,13 @@
     "outputPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/obj/",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
-      "netcoreapp3.0"
+      "netcoreapp3.1"
     ],
     "sources": {
       "https://api.nuget.org/v3/index.json": {}
     },
     "frameworks": {
-      "netcoreapp3.0": {
+      "netcoreapp3.1": {
         "projectReferences": {
           "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj": {
             "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj"
@@ -28,11 +28,11 @@
     }
   },
   "frameworks": {
-    "netcoreapp3.0": {
+    "netcoreapp3.1": {
       "dependencies": {
         "Microsoft.NET.Test.Sdk": {
           "target": "Package",
-          "version": "[16.2.0, )"
+          "version": "[16.5.0, )"
         },
         "Newtonsoft.Json": {
           "target": "Package",
@@ -40,15 +40,15 @@
         },
         "coverlet.collector": {
           "target": "Package",
-          "version": "[1.0.1, )"
+          "version": "[1.2.0, )"
         },
         "xunit": {
           "target": "Package",
-          "version": "[2.4.0, )"
+          "version": "[2.4.1, )"
         },
         "xunit.runner.visualstudio": {
           "target": "Package",
-          "version": "[2.4.0, )"
+          "version": "[2.4.1, )"
         }
       },
       "imports": [
@@ -69,7 +69,7 @@
           "privateAssets": "all"
         }
       },
-      "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.101/RuntimeIdentifierGraph.json"
+      "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
     }
   }
 }

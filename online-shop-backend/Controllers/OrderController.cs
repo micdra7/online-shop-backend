@@ -46,8 +46,10 @@ namespace online_shop_backend.Controllers
                 ShippingMethodID = cart.ShippingMethodID,
                 Note = cart.Note,
                 DateAndTime = DateTime.Now,
-                Details = new List<OrderDetail>()
+                Details = new List<OrderDetail>(),
+                ShippingMethodPrice = shippingMethodRepository.GetShippingMethod(cart.ShippingMethodID).Price
             };
+
 
             foreach (var item in cart.CartItems)
             {
@@ -110,6 +112,15 @@ namespace online_shop_backend.Controllers
         public List<PaymentType> GetPaymentTypes()
         {
             return paymentTypeRepository.GetAllPaymentTypes().ToList();
+        }
+
+        [HttpPost("history")]
+        [Authorize]
+        public async Task<List<Order>> OrderHistory([FromBody] UserDTO user)
+        {
+            var retrievedUser = await userManager.FindByNameAsync(user.Username);
+
+            return orderRepository.GetOrdersForUser(retrievedUser.Id).ToList();
         }
     }
 }

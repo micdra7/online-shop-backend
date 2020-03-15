@@ -49,6 +49,11 @@ namespace online_shop_backend.Repositories.Implementations
             return context.Orders.ToList();
         }
 
+        public ICollection<Order> GetOrdersForUser(string userId)
+        {
+            return context.Orders.Where(order => order.ApplicationUserID == userId).ToList();
+        }
+
         public ApplicationUser GetUserForOrder(long id)
         {
             return (ApplicationUser) context.Users.Find(

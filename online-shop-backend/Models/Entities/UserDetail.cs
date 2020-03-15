@@ -25,19 +25,7 @@ namespace online_shop_backend.Models.Entities
         
         [StringLength(200)]
         public string Address3 { get; set; }
-        
-        [StringLength(32)]
-        public string ZipCode { get; set; }
-        
-        [StringLength(200)]
-        public string City { get; set; }
-        
-        [StringLength(200)]
-        public string Country { get; set; }
-        
-        [StringLength(200)]
-        public string StateRegion { get; set; }
-        
+
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

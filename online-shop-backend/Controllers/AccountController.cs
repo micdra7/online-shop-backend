@@ -49,7 +49,85 @@ namespace online_shop_backend.Controllers
             
             var retrievedUser = await userManager.FindByNameAsync(user.Username);
 
-            return userDetailRepository.GetDetailsForUser(retrievedUser.Id).ToList();
+            var result = userDetailRepository.GetDetailsForUser(retrievedUser.Id).ToList();
+            result[0].ApplicationUser = retrievedUser;
+
+            return result;
+        }
+
+        [HttpPost("update-address")]
+        [Authorize]
+        public async Task<IActionResult> UpdateUserAddress([FromBody] AddressDTO address)
+        {
+            var user = await userManager.FindByNameAsync(address.Username);
+
+            var userDetails = userDetailRepository.GetDetailsForUser(user.Id).ToList();
+
+            if (userDetails.Count > 0 && !string.IsNullOrEmpty(userDetails[0].Address1))
+            {
+                return BadRequest(new { message = "Address already set" });
+            }
+
+            userDetails[0].Address1 = address.Address1;
+            userDetails[0].Address2 = address.Address2;
+            userDetails[0].Address3 = address.Address3;
+            
+            userDetailRepository.UpdateUserDetail(userDetails[0]);
+
+            return Ok();
+        }
+
+        [HttpPost("update")]
+        [Authorize]
+        public async Task<IActionResult> UpdateAccount([FromBody] AccountPageDTO account)
+        {
+            var user = await userManager.FindByNameAsync(account.User.Username);
+            var details = userDetailRepository.GetDetailsForUser(user.Id).ToList();
+
+            if (account.User.Email != user.Email)
+            {
+                user.Email = account.User.Email;
+            }
+
+            if (userManager.PasswordHasher.HashPassword(user, account.User.Password) != user.PasswordHash)
+            {
+                await userManager.ChangePasswordAsync(user,
+                    account.User.PasswordConfirm, 
+                    account.User.Password);
+            }
+
+            if (account.User.Name != details[0].Name)
+            {
+                details[0].Name = account.User.Name;
+            }
+            
+            if (account.User.Surname != details[0].Surname)
+            {
+                details[0].Surname = account.User.Surname;
+            }
+            
+            if (account.Address.Address1 != details[0].Address1)
+            {
+                details[0].Address1 = account.Address.Address1;
+            }
+            
+            if (account.Address.Address2 != details[0].Address2)
+            {
+                details[0].Address2 = account.Address.Address2;
+            }
+            
+            if (account.Address.Address2 != details[0].Address2)
+            {
+                details[0].Address2 = account.Address.Address2;
+            }
+
+            user.Details = details;
+
+            var result = await userManager.UpdateAsync(user);
+
+            return result.Succeeded ? 
+                Ok() as IActionResult : 
+                BadRequest(new {message = "Update not successful"});
         }
         
         [HttpPost("register")]

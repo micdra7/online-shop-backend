@@ -6724,8 +6724,6 @@
             "version": "[2.4.1, )"
           },
           "xunit.runner.visualstudio": {
-            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-            "suppressParent": "All",
             "target": "Package",
             "version": "[2.4.1, )"
           }
@@ -6748,7 +6746,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.200/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -35,6 +35,28 @@ namespace online_shop_backend.Controllers
             this.paymentTypeRepository = paymentTypeRepository;
             this.userManager = userManager;
         }
+
+        [HttpGet("{id:required}")]
+        [Authorize]
+        public Order GetOrderForId(long id)
+        {
+            var order = orderRepository.GetOrder(id);
+
+            if (order == null)
+            {
+                return null;
+            }
+            
+            order.Details = orderRepository.GetDetailsForOrder(id);
+            order.ShippingMethod = shippingMethodRepository.GetShippingMethod(order.ShippingMethodID);
+
+            foreach (var detail in order.Details)
+            {
+                detail.Product = productRepository.GetProduct(detail.ProductID);
+            }
+
+            return order;
+        }
         
         [HttpPost]
         [Authorize]

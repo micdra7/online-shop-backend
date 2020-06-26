@@ -62,7 +62,8 @@ namespace online_shop_backend.Controllers
                 {
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
-                    UnitPrice = productRepository.GetProduct(item.ProductID).Price
+                    UnitPrice = productRepository.GetProduct(item.ProductID).Price,
+                    Product = productRepository.GetProduct(item.ProductID)
                 });
             }
             

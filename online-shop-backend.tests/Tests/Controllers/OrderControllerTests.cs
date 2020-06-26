@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using Moq;
 using Newtonsoft.Json;
 using online_shop_backend.Controllers;
 using online_shop_backend.Models.DTO;
+using online_shop_backend.Models.Identity;
 using online_shop_backend.Repositories.Interfaces;
 using online_shop_backend.tests.Mocks;
 using Xunit;
@@ -14,12 +17,20 @@ namespace online_shop_backend.tests.Tests.Controllers
         private readonly OrderController orderController;
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
+        private readonly IShippingMethodRepository shippingMethodRepository;
+        private readonly IPaymentTypeRepository paymentTypeRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public OrderControllerTests()
         {
             this.orderRepository = new SampleOrderRepository();
             this.productRepository = new SampleProductRepository();
-            this.orderController = new OrderController(orderRepository, productRepository);
+            this.shippingMethodRepository = new SampleShippingMethodRepository();
+            this.paymentTypeRepository = new SamplePaymentTypeRepository();
+            this.userManager = TestUtils.CreateUserManager<ApplicationUser>();
+            
+            this.orderController = new OrderController(orderRepository, productRepository, 
+                shippingMethodRepository, paymentTypeRepository, userManager);
         }
 
         [Fact]
@@ -29,7 +40,7 @@ namespace online_shop_backend.tests.Tests.Controllers
             {
                 Note = "Note1",
                 ShippingMethodID = 1,
-                UserID = "1",
+                Username = "User1",
                 CartItems = new List<CartItemDTO>
                 {
                     new CartItemDTO
@@ -40,7 +51,7 @@ namespace online_shop_backend.tests.Tests.Controllers
                 }
             };
 
-            var result = orderController.Index(cartObject);
+            var result = orderController.Index(cartObject)?.Result;
             
             Assert.Equal(JsonConvert.SerializeObject(orderRepository.GetAllOrders().Last()),
                 JsonConvert.SerializeObject(result));
@@ -53,7 +64,7 @@ namespace online_shop_backend.tests.Tests.Controllers
             {
                 Note = "Note1",
                 ShippingMethodID = 1,
-                UserID = "1",
+                Username = "User1",
                 CartItems = new List<CartItemDTO>
                 {
                     new CartItemDTO
@@ -64,7 +75,7 @@ namespace online_shop_backend.tests.Tests.Controllers
                 }
             };
 
-            var result = orderController.Index(cartObject);
+            var result = orderController.Index(cartObject)?.Result;
             
             Assert.Null(result);
         }

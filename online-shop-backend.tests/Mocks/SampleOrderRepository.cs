@@ -21,7 +21,7 @@ namespace online_shop_backend.tests.Mocks
                     {
                         Id = "1",
                         UserName = "User1",
-                        Email = "User1@emai.com"
+                        Email = "User1@email.com"
                     },
                     ShippingMethod = new ShippingMethod
                     {
@@ -78,6 +78,11 @@ namespace online_shop_backend.tests.Mocks
         public ICollection<Order> GetAllOrders()
         {
             return Orders;
+        }
+
+        public ICollection<Order> GetOrdersForUser(string userId)
+        {
+            throw new System.NotImplementedException();
         }
 
         public ApplicationUser GetUserForOrder(long id)

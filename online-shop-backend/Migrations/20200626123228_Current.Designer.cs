@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using online_shop_backend.Models.Identity;
@@ -9,14 +10,15 @@ using online_shop_backend.Models.Identity;
 namespace online_shop_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200626123228_Current")]
+    partial class Current
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.0.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -269,10 +271,7 @@ namespace online_shop_backend.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long>("ApplicationUserID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUserID")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("DateIssued")
@@ -286,7 +285,7 @@ namespace online_shop_backend.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationUserID");
 
                     b.HasIndex("OrderID");
 
@@ -644,31 +643,15 @@ namespace online_shop_backend.Migrations
                     b.Property<string>("ApplicationUserID")
                         .HasColumnType("text");
 
-                    b.Property<string>("City")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("Country")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
-                    b.Property<string>("StateRegion")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
-
-                    b.Property<string>("ZipCode")
-                        .HasColumnType("character varying(32)")
-                        .HasMaxLength(32);
 
                     b.HasKey("ID");
 
@@ -748,7 +731,7 @@ namespace online_shop_backend.Migrations
                 {
                     b.HasOne("online_shop_backend.Models.Identity.ApplicationUser", "ApplicationUser")
                         .WithMany("Invoices")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserID");
 
                     b.HasOne("online_shop_backend.Models.Entities.Order", "Order")
                         .WithMany("Invoices")

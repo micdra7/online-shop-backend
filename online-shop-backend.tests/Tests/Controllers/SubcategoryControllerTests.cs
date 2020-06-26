@@ -12,11 +12,13 @@ namespace online_shop_backend.tests.Tests.Controllers
     {
         private readonly SubcategoryController subcategoryController;
         private readonly ISubcategoriesRepository subcategoriesRepository;
+        private readonly IProducerRepository producerRepository;
 
         public SubcategoryControllerTests()
         {
             this.subcategoriesRepository = new SampleSubcategoriesRepository();
-            this.subcategoryController = new SubcategoryController(subcategoriesRepository);
+            this.producerRepository = new SampleProducerRepository();
+            this.subcategoryController = new SubcategoryController(subcategoriesRepository, producerRepository);
         }
 
         [Fact]

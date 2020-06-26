@@ -1,22 +1,23 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj",
+    "projectUniqueName": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend.tests\\online-shop-backend.tests.csproj",
     "projectName": "online-shop-backend.tests",
-    "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj",
-    "outputPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/obj/",
+    "projectPath": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend.tests\\online-shop-backend.tests.csproj",
+    "outputPath": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend.tests\\obj\\",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.1"
     ],
     "sources": {
+      "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
       "https://api.nuget.org/v3/index.json": {}
     },
     "frameworks": {
       "netcoreapp3.1": {
         "projectReferences": {
-          "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj": {
-            "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj"
+          "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend\\online-shop-backend.csproj": {
+            "projectPath": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend\\online-shop-backend.csproj"
           }
         }
       }
@@ -69,7 +70,7 @@
           "privateAssets": "all"
         }
       },
-      "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+      "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
     }
   }
 }

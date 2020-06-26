@@ -80,6 +80,11 @@ namespace online_shop_backend.tests.Mocks
             return Orders;
         }
 
+        public ICollection<Order> GetOrdersForUser(string userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public ApplicationUser GetUserForOrder(long id)
         {
             return GetOrder(id).ApplicationUser;

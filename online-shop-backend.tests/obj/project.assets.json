@@ -6669,31 +6669,33 @@
     ]
   },
   "packageFolders": {
-    "/Users/michal/.nuget/packages/": {}
+    "C:\\Users\\Michał\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj",
+      "projectUniqueName": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend.tests\\online-shop-backend.tests.csproj",
       "projectName": "online-shop-backend.tests",
-      "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/online-shop-backend.tests.csproj",
-      "packagesPath": "/Users/michal/.nuget/packages/",
-      "outputPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend.tests/obj/",
+      "projectPath": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend.tests\\online-shop-backend.tests.csproj",
+      "packagesPath": "C:\\Users\\Michał\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend.tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/michal/.config/NuGet/NuGet.Config"
+        "C:\\Users\\Michał\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj": {
-              "projectPath": "/Users/michal/Projects/online-shop-backend/online-shop-backend/online-shop-backend.csproj"
+            "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend\\online-shop-backend.csproj": {
+              "projectPath": "C:\\Users\\Michał\\RiderProjects\\online-shop-backend\\online-shop-backend\\online-shop-backend.csproj"
             }
           }
         }
@@ -6724,8 +6726,6 @@
             "version": "[2.4.1, )"
           },
           "xunit.runner.visualstudio": {
-            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-            "suppressParent": "All",
             "target": "Package",
             "version": "[2.4.1, )"
           }
@@ -6748,7 +6748,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -69,7 +69,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Discount GetDiscount(long id)
         {
-            return Discounts.First(d => d.ID == id);
+            return Discounts.FirstOrDefault(d => d.ID == id);
         }
 
         public ICollection<Discount> GetAllDiscounts()

@@ -39,6 +39,7 @@ namespace online_shop_backend.tests.Mocks
                             OrderID = 1,
                             Quantity = 5,
                             UnitPrice = 15.5m,
+                            ProductID = 1,
                             Product = new Product
                             {
                                 ID = 1,
@@ -46,7 +47,24 @@ namespace online_shop_backend.tests.Mocks
                                 AvailableQuantity = 10,
                                 Price = 15.5m,
                                 CategoryID = 1,
-                                SubcategoryID = 1
+                                Category = new Category
+                                {
+                                    ID = 1,
+                                    Name = "Cat1"
+                                },
+                                SubcategoryID = 1,
+                                Subcategory = new Subcategory
+                                {
+                                    ID = 1,
+                                    Name = "Sub1",
+                                    CategoryID = 1
+                                },
+                                ProducerID = 1,
+                                Producer = new Producer
+                                {
+                                    ID = 1,
+                                    Name = "Producer1",
+                                }
                             }
                         }
                     }
@@ -72,7 +90,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Order GetOrder(long id)
         {
-            return Orders.First(o => o.ID == id);
+            return Orders.FirstOrDefault(o => o.ID == id);
         }
 
         public ICollection<Order> GetAllOrders()
@@ -82,7 +100,7 @@ namespace online_shop_backend.tests.Mocks
 
         public ICollection<Order> GetOrdersForUser(string userId)
         {
-            throw new System.NotImplementedException();
+            return Orders.Where(o => o.ApplicationUser.Id == userId).ToList();
         }
 
         public ApplicationUser GetUserForOrder(long id)

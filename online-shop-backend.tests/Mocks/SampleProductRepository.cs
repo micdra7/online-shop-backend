@@ -86,7 +86,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Product GetProduct(long id)
         {
-            return Products.First(p => p.ID == id);
+            return Products.FirstOrDefault(p => p.ID == id);
         }
 
         public ICollection<Product> GetAllProducts()
@@ -96,27 +96,27 @@ namespace online_shop_backend.tests.Mocks
 
         public Producer GetProducerForProduct(long id)
         {
-            return Products.First(p => p.ID == id)?.Producer;
+            return Products.FirstOrDefault(p => p.ID == id)?.Producer;
         }
 
         public Category GetCategoryForProduct(long id)
         {
-            return Products.First(p => p.ID == id)?.Category;
+            return Products.FirstOrDefault(p => p.ID == id)?.Category;
         }
 
         public Subcategory GetSubcategoryForProduct(long id)
         {
-            return Products.First(p => p.ID == id)?.Subcategory;
+            return Products.FirstOrDefault(p => p.ID == id)?.Subcategory;
         }
 
         public ICollection<Review> GetReviewsForProduct(long id)
         {
-            return Products.First(p => p.ID == id)?.Reviews;
+            return Products.FirstOrDefault(p => p.ID == id)?.Reviews;
         }
 
         public ICollection<Discount> GetDiscountsForProduct(long id)
         {
-            return Products.First(p => p.ID == id)?.Discounts;
+            return Products.FirstOrDefault(p => p.ID == id)?.Discounts;
         }
 
         public bool CheckIfProductIsAvailable(long id, int neededQuantity = 0)

@@ -46,7 +46,7 @@ namespace online_shop_backend.tests.Mocks
 
         public ShippingMethod GetShippingMethod(int id)
         {
-            return ShippingMethods.First(sm => sm.ID == id);
+            return ShippingMethods.FirstOrDefault(sm => sm.ID == id);
         }
 
         public ICollection<ShippingMethod> GetAllShippingMethods()

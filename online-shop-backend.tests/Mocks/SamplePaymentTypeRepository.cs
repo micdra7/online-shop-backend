@@ -34,11 +34,12 @@ namespace online_shop_backend.tests.Mocks
         public void UpdatePaymentType(PaymentType paymentType)
         {
             PaymentTypes.Remove(PaymentTypes.First(pt => pt.ID == paymentType.ID));
+            PaymentTypes.Add(paymentType);
         }
 
         public PaymentType GetPaymentType(int id)
         {
-            return PaymentTypes.First(pt => pt.ID == id);
+            return PaymentTypes.FirstOrDefault(pt => pt.ID == id);
         }
 
         public ICollection<PaymentType> GetAllPaymentTypes()

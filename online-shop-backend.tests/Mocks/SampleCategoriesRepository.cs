@@ -99,7 +99,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Category GetCategory(int id)
         {
-            return Categories.First(cat => cat.ID == id);
+            return Categories.FirstOrDefault(cat => cat.ID == id);
         }
 
         public ICollection<Category> GetAllCategories()
@@ -109,7 +109,7 @@ namespace online_shop_backend.tests.Mocks
 
         public ICollection<Subcategory> GetSubcategoriesForCategory(int id)
         {
-            return Categories.First(cat => cat.ID == id)?.Subcategories;
+            return Categories.FirstOrDefault(cat => cat.ID == id)?.Subcategories;
         }
 
         public ICollection<Product> GetProductsForCategory(int id, int page = 1, int limit = 20)

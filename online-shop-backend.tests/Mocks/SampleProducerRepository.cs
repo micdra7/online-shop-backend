@@ -72,7 +72,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Producer GetProducer(int id)
         {
-            return Producers.First(p => p.ID == id);
+            return Producers.FirstOrDefault(p => p.ID == id);
         }
 
         public ICollection<Producer> GetAllProducers()
@@ -82,7 +82,7 @@ namespace online_shop_backend.tests.Mocks
 
         public ICollection<ProducerDetail> GetDetailsForProducer(int id)
         {
-            return Producers.First(p => p.ID == id)?.Details;
+            return Producers.FirstOrDefault(p => p.ID == id)?.Details;
         }
     }
 }

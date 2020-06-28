@@ -58,6 +58,11 @@ namespace online_shop_backend.Controllers
             return order;
         }
         
+        /// <summary>
+        /// Method for adding order
+        /// </summary>
+        /// <param name="cart">Cart object with chosen products, username, note and chosen shipping method</param>
+        /// <returns>Order if created, null otherwise</returns>
         [HttpPost]
         [Authorize]
         public async Task<Order> Index([FromBody] CartDTO cart)

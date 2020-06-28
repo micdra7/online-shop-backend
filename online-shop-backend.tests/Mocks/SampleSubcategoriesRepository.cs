@@ -81,7 +81,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Subcategory GetSubcategory(int id)
         {
-            return Subcategories.First(sub => sub.ID == id);
+            return Subcategories.FirstOrDefault(sub => sub.ID == id);
         }
 
         public ICollection<Subcategory> GetAllSubcategories()
@@ -91,7 +91,7 @@ namespace online_shop_backend.tests.Mocks
 
         public Category GetCategoryForSubcategory(int id)
         {
-            return Subcategories.First(sub => sub.ID == id)?.Category;
+            return Subcategories.FirstOrDefault(sub => sub.ID == id)?.Category;
         }
 
         public ICollection<Product> GetProductsForSubcategory(int id, int page = 1, int limit = 20)
